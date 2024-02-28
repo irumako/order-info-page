@@ -1,0 +1,11 @@
+<html>
+<head>
+    <title>Item Details</title>
+</head>
+<body>
+    <h1>Order ID: {{ id }}</h1>
+    {% for file in files %}
+        <br><a href="{{ url_for('static', path=file) }}" download>{{file}}</a>
+    {% endfor %}
+</body>
+</html>
