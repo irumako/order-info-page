@@ -1,7 +1,7 @@
 import datetime
 from typing import List
 
-from sqlalchemy import String, Float
+from sqlalchemy import String, Float, inspect
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .base import Base
@@ -14,4 +14,4 @@ class Order(Base):
     contractor: Mapped[str] = mapped_column(String(100), nullable=False)
     amount: Mapped[float] = mapped_column(Float(2), nullable=False)
 
-    products: Mapped[List["Product"]] = relationship(back_populates="product")
+    products: Mapped[List["Product"]] = relationship(back_populates="order")

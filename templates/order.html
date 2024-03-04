@@ -1,11 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <title>Item Details</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детали заказа</title>
 </head>
-<body>
-    <h1>Order ID: {{ id }}</h1>
-    {% for file in files %}
-        <br><a href="{{ url_for('static', path=file) }}" download>{{file}}</a>
-    {% endfor %}
+<body style="text-align:center;">
+    <header>
+        <img src="/static/logo.png" alt="Company Logo">
+    </header>
+    <section>
+        <h1>Заказ {{order_number }}</h1>
+        <p>Дата: {{ order_date }}</p>
+        <p>Контрагент: {{ counterparty }}</p>
+        <p>Сумма: {{ order_amount }}</p>
+    </section>
+    <section>
+        <h2>Товары</h2>
+        <ul>
+            {% for product in products %}
+                <li>
+                    <strong>Наименование:</strong> {{ product.name }}<br>
+                    <strong>Количество:</strong> {{ product.quantity }} {{ product.unit }}<br>
+                    <strong>Цена:</strong> {{ product.price }}<br>
+                    <strong>Сумма:</strong> {{ product.amount }}
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+    <section>
+        <h2>Вложения</h2>
+        <ul>
+            {% for file in files %}
+                <li><a href="{{ url_for('static', path=file) }}" download>{{file}}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
 </body>
 </html>

@@ -5,7 +5,7 @@ from config import settings
 
 
 engine = create_async_engine(
-    settings.SQLALCHEMY_DATABASE_URI,
+    settings.SQLALCHEMY_DATABASE_URI.unicode_string(),
     future=True,
     echo=True,
 )

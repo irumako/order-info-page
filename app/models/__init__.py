@@ -1,2 +1,2 @@
-from app.models.order import *
-from app.models.product import *
+from .order import *
+from .product import *
