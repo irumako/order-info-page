@@ -1,9 +1,9 @@
 import uuid
 
-from sqlalchemy import String, UUID, Float, ForeignKey
+from sqlalchemy import String, UUID, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from .base import Base
+from .base import Base, PrecisionFloat
 
 
 class Product(Base):
@@ -12,8 +12,8 @@ class Product(Base):
     name: Mapped[str] = mapped_column(String(250), nullable=False)
     quantity: Mapped[int] = mapped_column(nullable=False)
     unit: Mapped[str] = mapped_column(String(10))
-    price: Mapped[float] = mapped_column(Float(2), nullable=False)
-    amount: Mapped[float] = mapped_column(Float(2), nullable=False)
+    price: Mapped[float] = mapped_column(PrecisionFloat(2), nullable=False)
+    amount: Mapped[float] = mapped_column(PrecisionFloat(2), nullable=False)
 
     order_id: Mapped[str] = mapped_column(ForeignKey("order.id"))
     order: Mapped["Order"] = relationship(back_populates="products")

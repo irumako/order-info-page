@@ -4,38 +4,132 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Детали заказа</title>
+
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+
 </head>
-<body style="text-align:center;">
-    <header>
-        <img src="/static/logo.png" alt="Company Logo">
+<body style="text-align:center; font-family: Nunito;">
+    <header style="padding-top: 10pt; padding-bottom: 5pt; ">
+        <img width="200" height="50" src="/static/logo.png" alt="Company Logo">
     </header>
-    <section>
-        <h1>Заказ {{order_number }}</h1>
-        <p>Дата: {{ order_date }}</p>
-        <p>Контрагент: {{ counterparty }}</p>
-        <p>Сумма: {{ order_amount }}</p>
+
+    <div class="content">
+    <section class="order-info">
+        <div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <svg width="50px" height="50px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="#44b292"/>
+                    <path d="M16.0303 8.96967C16.3232 9.26256 16.3232 9.73744 16.0303 10.0303L11.0303 15.0303C10.7374 15.3232 10.2626 15.3232 9.96967 15.0303L7.96967 13.0303C7.67678 12.7374 7.67678 12.2626 7.96967 11.9697C8.26256 11.6768 8.73744 11.6768 9.03033 11.9697L10.5 13.4393L12.7348 11.2045L14.9697 8.96967C15.2626 8.67678 15.7374 8.67678 16.0303 8.96967Z" fill="#ffffff"/>
+                </svg>
+                <h1 style="padding-left: 5pt;">Ваш номер заказа <br> {{ order.id }}</h1>
+            </div>
+            <p style="line-height: 1.5;">Заказ сформирован <b>{{ order.date.strftime("%d/%m/%Y") }}</b> для <br>
+                <b>{{ order.contractor }}</b>
+                <br> на сумму <b>{{ order.amount }}</b> рублей.</p>
+        </div>
+        
+
+        <div>
+            <div style="display: flex; align-items: center; justify-content: center;">
+                <svg fill="#000000" height="30px" width="30px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 511.999 511.999" xml:space="preserve">
+                <g>
+                    <g>
+                        <path d="M466.904,68.854c-60.129-60.127-157.962-60.127-218.091,0L35.373,282.294c-47.166,47.167-47.161,123.497,0,170.659
+                            c47.053,47.051,123.609,47.049,170.659,0l213.441-213.442c33.973-33.973,33.973-89.254,0-123.228
+                            c-33.974-33.974-89.254-33.974-123.228,0L114.204,298.327c-7.833,7.833-7.833,20.532,0,28.365c7.833,7.833,20.531,7.833,28.365,0
+                            L324.61,144.65c18.333-18.336,48.164-18.334,66.497,0c18.333,18.334,18.333,48.165,0,66.498l-213.44,213.441
+                            c-31.412,31.41-82.519,31.41-113.93,0c-31.487-31.487-31.484-82.445,0-113.929L277.179,97.219
+                            c44.595-44.596,116.77-44.59,161.36,0c44.596,44.595,44.59,116.77,0,161.36l-94.863,94.863c-7.833,7.833-7.833,20.532,0,28.365
+                            c7.834,7.833,20.531,7.833,28.365,0l94.863-94.863C527.031,226.817,527.031,128.981,466.904,68.854z"/>
+                    </g>
+                </g>
+                </svg>
+                <h2 style="padding-left: 5pt;">Вложения</h2>
+            </div>
+            
+
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                {% for file in order.files %}
+                    <a id="file_link" href="{{ url_for('static', path=file) }}" download>
+                    <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.163 2.819C9 3.139 9 3.559 9 4.4V11H7.803c-.883 0-1.325 0-1.534.176a.75.75 0 0 0-.266.62c.017.274.322.593.931 1.232l4.198 4.401c.302.318.453.476.63.535a.749.749 0 0 0 .476 0c.177-.059.328-.217.63-.535l4.198-4.4c.61-.64.914-.96.93-1.233a.75.75 0 0 0-.265-.62C17.522 11 17.081 11 16.197 11H15V4.4c0-.84 0-1.26-.164-1.581a1.5 1.5 0 0 0-.655-.656C13.861 2 13.441 2 12.6 2h-1.2c-.84 0-1.26 0-1.581.163a1.5 1.5 0 0 0-.656.656zM5 21a1 1 0 0 0 1 1h12a1 1 0 1 0 0-2H6a1 1 0 0 0-1 1z" fill="#808080"/>
+                    </svg>
+                    <span style="padding-left: 5pt;">{{file}}</span>
+                    
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
     </section>
-    <section>
-        <h2>Товары</h2>
-        <ul>
-            {% for product in products %}
-                <li>
-                    <strong>Наименование:</strong> {{ product.name }}<br>
-                    <strong>Количество:</strong> {{ product.quantity }} {{ product.unit }}<br>
-                    <strong>Цена:</strong> {{ product.price }}<br>
-                    <strong>Сумма:</strong> {{ product.amount }}
-                </li>
+    <section style="display:flex; align-items: center;  flex-direction: column;">
+        
+        <table>
+            <tr>
+                <th><b>№</b></th>
+                <th><b>Наименование</b></th>
+                <th><b>Количевство</b></th>
+                <th><b>Цена, руб.</b></th>
+                <th><b>Сумма</b></th>
+            </tr>
+            {% for product in order.products[step*(current_page-1):step*current_page] %}
+            <tr>
+                <th>{{ loop.index }}</th>
+                <th style="text-align: left;">{{ product.name }}</th>
+                <th>{{ product.quantity }} {{ product.unit }}</th>
+                <th>{{ product.price }}</th>
+                <th>{{ product.amount }}</th>
+            </tr>
             {% endfor %}
-        </ul>
+        </table>
+
+        <div class="pagination_section">
+            {% if current_page != 1%}
+            <a id="pagination_link_pc" href="{{ url_for('get_order_information', order_id=order.id).include_query_params(page=current_page-1, step=step) }}">
+                << Предыдущий
+            </a>
+            <a id="pagination_link_mobile" href="{{ url_for('get_order_information', order_id=order.id).include_query_params(page=current_page-1, step=step) }}">
+                << 
+            </a>
+            {% else %}
+            <p id="pagination_link_pc">
+                << Предыдущий
+            </p>
+            <p id="pagination_link_mobile">
+                <<
+            </p>
+            {% endif %}
+            <p>
+               {{current_page}}
+            </p>
+            /
+            <a href="{{ url_for('get_order_information', order_id=order.id).include_query_params(page=total_pages, step=step) }}"
+               title="last page">
+                {{total_pages}}
+            </a>
+            {% if current_page != total_pages%}
+            <a id="pagination_link_pc" href="{{ url_for('get_order_information', order_id=order.id).include_query_params(page=current_page+1, step=step) }}">
+            Следующий >>
+            </a>
+            <a id="pagination_link_mobile" href="{{ url_for('get_order_information', order_id=order.id).include_query_params(page=current_page+1, step=step) }}">
+                >>
+            </a>
+            {% else %}
+            <p id="pagination_link_pc">
+                Следующий >>
+            </p>
+            <p id="pagination_link_mobile">
+                >>
+            </p>
+            {% endif %}
+        </div>
     </section>
-    <section>
-        <h2>Вложения</h2>
-        <ul>
-            {% for file in files %}
-                <li><a href="{{ url_for('static', path=file) }}" download>{{file}}</a></li>
-            {% endfor %}
-        </ul>
-    </section>
+    </div>
+
 </body>
 </html>
