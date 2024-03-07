@@ -11,7 +11,7 @@ This project provides web pages where users can view information about their ord
 ## Installation
 1. Clone the repository:
 
-   `git clone https://github.com/yourusername/fastapi-order-information.git`
+   `git clone https://github.com/irumako/order-info-page.git`
    
 2. Run docker container:
 
